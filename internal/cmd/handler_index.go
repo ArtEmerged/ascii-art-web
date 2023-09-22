@@ -9,14 +9,13 @@ func handler_index(w http.ResponseWriter, r *http.Request) {
 		returnError(w, http.StatusNotFound)
 		return
 	}
-	if r.Method == http.MethodGet {
-		err := Tmpl.ExecuteTemplate(w, "index.html", nil)
-		if err != nil {
-			returnError(w, http.StatusInternalServerError)
-			return
-		}
-	} else {
+	if r.Method != http.MethodGet {
 		returnError(w, http.StatusMethodNotAllowed)
+		return
+	}
+	err := Tmpl.ExecuteTemplate(w, "index.html", nil)
+	if err != nil {
+		returnError(w, http.StatusInternalServerError)
 		return
 	}
 }

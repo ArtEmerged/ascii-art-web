@@ -15,22 +15,20 @@ func handler_ascii_art(w http.ResponseWriter, r *http.Request) {
 		returnError(w, http.StatusMethodNotAllowed)
 		return
 	}
-	text := r.FormValue("text")
-	fs := r.FormValue("artOption")
-	if err := asciiart.AsciiChar(text); err != nil {
-		returnError(w, http.StatusBadRequest)
+	text := r.FormValue("data")
+	banners := r.FormValue("banners")
+	ascii_art, code := asciiart.Build(text, banners)
+	if code != 0 {
+		returnError(w, code)
 		return
-	} else {
-		ascii_art, err := asciiart.Build(text, fs)
-		if err != nil {
-			returnError(w, http.StatusInternalServerError)
-			return
-		}
-		out := output{Ascii_art: ascii_art, Text: text}
-		err = Tmpl.ExecuteTemplate(w, "index.html", out)
-		if err != nil {
-			returnError(w, http.StatusInternalServerError)
-			return
-		}
 	}
+	out := output{
+		Ascii_art: ascii_art,
+		Text:      text}
+	err := Tmpl.ExecuteTemplate(w, "index.html", out)
+	if err != nil {
+		returnError(w, http.StatusInternalServerError)
+		return
+	}
+
 }
