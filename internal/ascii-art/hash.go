@@ -15,9 +15,9 @@ const (
 
 // Check hash in file FS
 func Validate() error {
-	shadow_text, err := os.ReadFile("internal/ascii-art/fs/shadow.txt")
-	standard_text, err2 := os.ReadFile("internal/ascii-art/fs/standard.txt")
-	thinkertoy_text, err3 := os.ReadFile("internal/ascii-art/fs/thinkertoy.txt")
+	shadow_text, err := os.ReadFile("internal/ascii-art/banners/shadow.txt")
+	standard_text, err2 := os.ReadFile("internal/ascii-art/banners/standard.txt")
+	thinkertoy_text, err3 := os.ReadFile("internal/ascii-art/banners/thinkertoy.txt")
 	if err != nil || err2 != nil || err3 != nil {
 		errtext := fmt.Sprintf("there is a proble with reading template files: \n1) %v\n2) %v \n3) %v\n", err, err2, err3)
 		return errors.New(errtext)
