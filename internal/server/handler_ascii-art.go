@@ -1,7 +1,6 @@
 package server
 
 import (
-	"html/template"
 	"net/http"
 
 	asciiart "asciiartweb/internal/ascii-art"
@@ -12,15 +11,10 @@ type output struct {
 }
 
 func handler_ascii_art(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/ascii-art" {
-		returnError(w, http.StatusNotFound)
-		return
-	}
 	if r.Method != http.MethodPost {
 		returnError(w, http.StatusMethodNotAllowed)
 		return
 	}
-
 	text := r.FormValue("text")
 	fs := r.FormValue("artOption")
 	if err := asciiart.AsciiChar(text); err != nil {
@@ -33,12 +27,7 @@ func handler_ascii_art(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		out := output{Ascii_art: ascii_art, Text: text}
-		tmpl, err := template.ParseFiles("templates/index.html")
-		if err != nil {
-			returnError(w, http.StatusInternalServerError)
-			return
-		}
-		err = tmpl.Execute(w, out)
+		err = Tmpl.ExecuteTemplate(w, "index.html", out)
 		if err != nil {
 			returnError(w, http.StatusInternalServerError)
 			return

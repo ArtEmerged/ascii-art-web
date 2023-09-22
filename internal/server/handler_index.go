@@ -1,7 +1,6 @@
 package server
 
 import (
-	"html/template"
 	"net/http"
 )
 
@@ -10,19 +9,13 @@ func handler_index(w http.ResponseWriter, r *http.Request) {
 		returnError(w, http.StatusNotFound)
 		return
 	}
-	switch r.Method {
-	case "GET":
-		tmpl, err := template.ParseFiles("templates/index.html")
+	if r.Method == http.MethodGet {
+		err := Tmpl.ExecuteTemplate(w, "index.html", nil)
 		if err != nil {
 			returnError(w, http.StatusInternalServerError)
 			return
 		}
-		err = tmpl.Execute(w, nil)
-		if err != nil {
-			returnError(w, http.StatusInternalServerError)
-			return
-		}
-	default:
+	} else {
 		returnError(w, http.StatusMethodNotAllowed)
 		return
 	}
