@@ -11,7 +11,7 @@ const (
 
 func AsciiList(file string) (map[rune][]string, error) {
 	letter := make(map[rune][]string)
-	in, err := os.Open("internal/ascii-art/fs/" + file + ".txt")
+	in, err := os.Open("internal/ascii-art/banners/" + file + ".txt")
 	f := bufio.NewScanner(in)
 	char := firstRuneMin1
 	for f.Scan() {
