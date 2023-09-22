@@ -1,7 +1,7 @@
 package main
 
-import "asciiartweb/internal/server"
+import cmd "asciiartweb/internal/cmd"
 
 func main() {
-	server.Running_server()
+	cmd.Running_server()
 }
