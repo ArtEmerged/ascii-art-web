@@ -11,6 +11,10 @@ type output struct {
 }
 
 func handler_ascii_art(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/ascii-art" {
+		returnError(w, http.StatusNotFound)
+		return
+	}
 	if r.Method != http.MethodPost {
 		returnError(w, http.StatusMethodNotAllowed)
 		return
@@ -24,11 +28,11 @@ func handler_ascii_art(w http.ResponseWriter, r *http.Request) {
 	}
 	out := output{
 		Ascii_art: ascii_art,
-		Text:      text}
+		Text:      text,
+	}
 	err := Tmpl.ExecuteTemplate(w, "index.html", out)
 	if err != nil {
 		returnError(w, http.StatusInternalServerError)
 		return
 	}
-
 }
