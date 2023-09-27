@@ -11,10 +11,6 @@ type output struct {
 }
 
 func handler_ascii_art(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/ascii-art" {
-		returnError(w, http.StatusNotFound)
-		return
-	}
 	if r.Method != http.MethodPost {
 		returnError(w, http.StatusMethodNotAllowed)
 		return
